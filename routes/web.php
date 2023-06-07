@@ -71,12 +71,40 @@ Route::get('/factory', function () {
                         $category1 = Category::where("id_category", $categoryId)->get();
                         array_push($result, "Category: {$category1}");
                     }
+                    if ($dodatniParametar == "tags"){
+                        $tagId = Tags::where("slug_tag", $tags)->pluck('id_tag');
+                        $tag = Tags::where("id_tag", $tagId)->get();
+                        array_push($result, $tag);
+                    }
                 }
             }
         }
 
-        $allMeals = Meals::where("language_id", $languageId)->orWhere("tag",$tagId)->orWhere("category", $categoryId)->orWhere("ingredient", $ingredientId)->get();
-        array_push($result, $allMeals);
+        $query = Meals::query();
+
+        $query->where("language_id", $languageId)->when($per_page != "", function($q){
+            $per_page=request('per_page');
+            return $q->take($per_page);
+        })
+        ->when($tagId != "", function($q){
+            $tags = request('tags');
+            $tagId = Tags::where("slug_tag", $tags)->pluck('id_tag');
+            return $q->where("tag", $tagId);
+        })->when($categoryId != "", function($q){
+            $lang = request('lang');
+            $languageId = Languages::where("language_name", $lang)->pluck("language_id");
+            $categoryId = Meals::where("language_id", $languageId)->pluck("category");
+            return $q->where("category", $categoryId);
+        })->when($ingredientId != "", function($q){
+            $lang = request('lang');
+            $languageId = Languages::where("language_name", $lang)->pluck("language_id");
+            $ingredientId = Meals::where("language_id", $languageId)->pluck("ingredient");
+            return $q->where("ingredient", $ingredientId);
+        });
+        
+        $queriedMeals = $query->get();
+        
+        array_push($result, $queriedMeals);
 
         return json_encode($result);
     }
