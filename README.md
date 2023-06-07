@@ -2,7 +2,7 @@
 
 Ovdje prilažem svoju završnu verziju rješenja zadatka.<br />
 
-<h2>Estimacija rješenosti zadatka</h2>
+<h2>Estimacija riješenosti zadatka</h2>
 
 Ocjena 3.5 od 5<br />
 
