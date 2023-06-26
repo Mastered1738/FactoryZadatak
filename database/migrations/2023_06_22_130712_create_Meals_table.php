@@ -14,14 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('Meals', function (Blueprint $table) {
-            $table->integer('category')->nullable();
-            $table->integer('ingredient');
-            $table->integer('tag');
-            $table->string('meal_name')->nullable();
-            $table->integer('meal_id')->primary();
-            $table->string('meal_description');
-            $table->string('status')->nullable();
-            $table->softDeletes();
+            $table->increments('MealsID');
+            $table->string('Meal_name')->unique('Meals_unique');
+            $table->integer('Language_id');
+            $table->integer('category_id');
         });
     }
 

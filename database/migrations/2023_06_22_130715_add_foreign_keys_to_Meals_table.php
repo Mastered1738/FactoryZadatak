@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('Meals', function (Blueprint $table) {
-            $table->foreign(['category'], 'Meals_Category_id_category_fk')->references(['id_category'])->on('Category');
-            $table->foreign(['ingredient'], 'Meals_Ingredients_id_ingredients_fk')->references(['id_ingredients'])->on('Ingredients');
-            $table->foreign(['tag'], 'Meals_Tags_id_tag_fk')->references(['id_tag'])->on('Tags');
+            $table->foreign(['category_id'], 'Meals_Category_id_category_fk')->references(['id_category'])->on('Category');
+            $table->foreign(['Language_id'], 'Meals_Languages_language_id_fk')->references(['language_id'])->on('Languages');
         });
     }
 
@@ -29,8 +28,7 @@ return new class extends Migration
     {
         Schema::table('Meals', function (Blueprint $table) {
             $table->dropForeign('Meals_Category_id_category_fk');
-            $table->dropForeign('Meals_Ingredients_id_ingredients_fk');
-            $table->dropForeign('Meals_Tags_id_tag_fk');
+            $table->dropForeign('Meals_Languages_language_id_fk');
         });
     }
 };
