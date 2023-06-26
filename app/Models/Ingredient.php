@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Tags extends Model
+class Ingredient extends Model
 {
     use HasFactory;
 
-    public function getTagfromTagID($tagid){
-        return DB::table('Tags')->where('id_tag',$tagid)->get();
+    public function getIngredientFromIngredientID($ingredientID){
+        return DB::table('Ingredients')->where('id_ingredients', $ingredientID)->get();
     }
+
+    
 }
